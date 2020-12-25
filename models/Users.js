@@ -1,7 +1,9 @@
 const mongoose = require('mongoose');
 const bcrypt = require('bcrypt'); // https://www.npmjs.com/package/bcrypt
 const saltRounds = 10;
+const jwt = require('jsonwebtoken');
 
+// create table
 const userSchema = mongoose.Schema({
     name: {
         type: String,
@@ -33,10 +35,12 @@ const userSchema = mongoose.Schema({
     }
 });
 
+// 테이블에 값을 넣기전 이벤트 발생시킴.
 userSchema.pre('save', function (next) {
-
+    // 테이블 칼럼
     var user = this;
 
+    // password 칼럼이 변경되었을 때만 실행 
     if(user.isModified('password')) {
         bcrypt.genSalt(saltRounds, function (err, salt) {
 
@@ -48,10 +52,41 @@ userSchema.pre('save', function (next) {
                 next();
             });
         });
+    } else {
+        next();
     }
 
 });
 
+userSchema.methods.comparePassword = function(plainPassword, cb) {
+    bcrypt.compare(plainPassword, this.password, function(err, isMatch) {
+        if(err) return cb(err)
+        cb(null, isMatch);
+    });
+}
+
+userSchema.methods.generateToken = function(cb) {
+    var user = this;
+    var token = jwt.sign(user._id.toHexString(), 'secretToken');
+    user.token = token;
+    user.save(function(err, user) {
+        if(err) return cb(err);
+        cb(null, user);
+
+    });
+}
+
+userSchema.statics.findByToken = function(token, cb) {
+    var user = this;
+    jwt.verify(token, 'secretToken', function(err, decoded){
+
+        user.findOne({"_id": decoded, "token": token}, function(err, user) {
+
+            if(err) return cb(err);
+            cb(null, user);
+        });
+    });
+}
 const User = mongoose.model('User', userSchema);
 
 module.exports = { User };
