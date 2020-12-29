@@ -1,11 +1,11 @@
 import React from 'react'
 
-function NavBar() {
+function LandingPage() {
     return (
         <div>
-            
+            LandingPage
         </div>
     )
 }
 
-export default NavBar
+export default LandingPage

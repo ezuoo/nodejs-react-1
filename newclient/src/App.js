@@ -1,7 +1,4 @@
-/**
- * 라우팅 관련 작업.
- */
-// import logo from './logo.svg';
+import logo from './logo.svg';
 import './App.css';
 
 function App() {

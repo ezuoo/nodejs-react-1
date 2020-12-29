@@ -6,7 +6,7 @@ const { auth } = require('./middleware/auth');
 const { User } = require('./models/Users');
 
 const app = express();
-const port = 3000;
+const port = 5000;
 
 
 app.use(bodyParser.urlencoded({extended: true}));
@@ -23,6 +23,10 @@ mongoose.connect(config.mongoURI, {
 
 app.get('/', (req, res) => {
     res.send('Hello World!');
+});
+
+app.get('/api/hello', (req, res) => {
+    res.send("hello react world");
 });
 
 app.post('/api/users/register', (req, res) => {
