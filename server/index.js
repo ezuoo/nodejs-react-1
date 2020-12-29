@@ -26,7 +26,8 @@ app.get('/', (req, res) => {
 });
 
 app.get('/api/hello', (req, res) => {
-    res.send("hello react world");
+    
+    res.send("hello react world !");
 });
 
 app.post('/api/users/register', (req, res) => {
