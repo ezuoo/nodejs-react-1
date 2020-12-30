@@ -26,17 +26,17 @@ function RegisterPage(props) {
 
     const onSubmitHandler = function (event) {
         event.preventDefault();
-
+        
+        // 유효성 검사
         if (Password !== ConfirmPassword) {
             return alert("비밀번호가 같지 않습니다.");
         }
+
         let body = {
             name: Name,
             email : Email,
             password : Password
         };
-
-        console.log(body);
         
         // to _action/user_action
         dispatch(registerUser(body))

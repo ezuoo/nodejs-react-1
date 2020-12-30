@@ -1,5 +1,9 @@
 import axios from 'axios';
-import { LOGIN_USER, REGISTER_USER } from './types';
+import { 
+    LOGIN_USER, 
+    REGISTER_USER,
+    MESSAGE_SEND 
+} from './types';
 
 /** login
  * @param {*} dataSubmit 
@@ -26,3 +30,4 @@ export function registerUser(dataSubmit) {
         payload: request
     }
 }
+

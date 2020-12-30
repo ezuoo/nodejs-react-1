@@ -25,11 +25,6 @@ app.get('/', (req, res) => {
     res.send('Hello World!');
 });
 
-app.get('/api/hello', (req, res) => {
-    
-    res.send("hello react world !");
-});
-
 app.post('/api/users/register', (req, res) => {
     const user = new User(req.body);
     user.save( (err, userInfo) => {
@@ -41,8 +36,7 @@ app.post('/api/users/register', (req, res) => {
 });
 
 app.post('/api/users/login', (req, res) => {
-    console.log('client -> server');
-    console.log(req.body);
+
     User.findOne({email : req.body.email}, (err, user) => {
         if(!user) {
             return res.json({

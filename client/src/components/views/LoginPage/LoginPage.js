@@ -22,8 +22,6 @@ function LoginPage(props) {
             email : Email,
             password : Password
         };
-
-        console.log(body);
         
         // to _action/user_action
         dispatch(loginUser(body))
