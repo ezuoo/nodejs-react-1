@@ -42,9 +42,9 @@ function RegisterPage(props) {
         dispatch(registerUser(body))
             .then(res => {
                 if(res.payload.success) {
-                    props.history.push('/');
+                    props.history.push('/login');
                 } else {
-                    alert('Error');
+                    alert('Fail register');
                 }
             });
     }
