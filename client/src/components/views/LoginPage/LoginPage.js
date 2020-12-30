@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { loginUser } from '../../../_actions/user_action';
 
-function LoginPage() {
-
+function LoginPage(props) {
+    const dispatch = useDispatch();
     const [Email, setEmail] = useState("");
     const [Password, setPassword] = useState("");
 
@@ -14,6 +16,24 @@ function LoginPage() {
     }
 
     const onSubmitHandler =  (event) => {
+        event.preventDefault();
+
+        let body = {
+            email : Email,
+            password : Password
+        };
+
+        console.log(body);
+        
+        // to _action/user_action
+        dispatch(loginUser(body))
+            .then(res => {
+                if(res.payload.loginSuccess) {
+                    props.history.push('/');
+                } else {
+                    alert('Error');
+                }
+            });
         
     }
 
