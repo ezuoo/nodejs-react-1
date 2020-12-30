@@ -1,18 +1,21 @@
-import { 
-    LOGIN_USER, 
+import {
+    LOGIN_USER,
     REGISTER_USER,
-    MESSAGE_SEND
+    AUTH_USER
 } from '../_actions/types';
 
-export default function (state = {}, action) {
+export default function foo(state = {}, action) {
     switch (action.type) {
         case LOGIN_USER:
             // return to LoginPage/LoginPage.js ( loginUser() )
-            return { ...state, loginState : action.payload};
+            return { ...state, loginState: action.payload };
 
         case REGISTER_USER:
-            return { ...state, register : action.payload};
-        
+            return { ...state, register: action.payload };
+
+        case AUTH_USER:
+            return { ...state, userData: action.payload };
+
         default:
             return state;
     }

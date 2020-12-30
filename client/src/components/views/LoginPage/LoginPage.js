@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { loginUser } from '../../../_actions/user_action';
+import { withRouter } from 'react-router-dom';
 
 function LoginPage(props) {
     const dispatch = useDispatch();
@@ -35,6 +36,10 @@ function LoginPage(props) {
         
     }
 
+    const onClickHomeHandler = () => {
+        props.history.push('/');
+    }
+
     return (
         <div style = {{
             display: 'flex', justifyContent: 'center', alignItems: 'center',
@@ -51,8 +56,13 @@ function LoginPage(props) {
                     Login
                 </button>
             </form>
+            <div style={{ display: 'block' }}>
+                <button onClick={onClickHomeHandler}>
+                    Home
+                </button>
+            </div>
         </div>
     )
 }
 
-export default LoginPage
+export default withRouter(LoginPage)

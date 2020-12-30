@@ -25,8 +25,10 @@ app.get('/', (req, res) => {
     res.send('Hello World!');
 });
 
+// register
 app.post('/api/users/register', (req, res) => {
     const user = new User(req.body);
+    console.log('user name : ' , user.name);
     user.save( (err, userInfo) => {
         if(err) return res.json({ success: false, err});
         return res.status(200).json({
@@ -35,6 +37,7 @@ app.post('/api/users/register', (req, res) => {
     });
 });
 
+// login
 app.post('/api/users/login', (req, res) => {
 
     User.findOne({email : req.body.email}, (err, user) => {
@@ -60,18 +63,7 @@ app.post('/api/users/login', (req, res) => {
     });
 });
 
-app.get('/api/users/auth', auth, (req, res) => {
-    res.status(200).json({ 
-        _id: req.user._id,
-        isAdmin: req.user.role === 0 ? false : true,
-        email: req.user.email,
-        name: req.user.name,
-        lastname: req.user.lastname,
-        role: req.user.role,
-        image: req.user.image 
-    });
-});
-
+// logout
 app.get('/api/users/logout', auth, (req, res) => {
     User.findOneAndUpdate({_id: req.user._id}, {token: ""}, (err, user) => {
         if(err) return res.json({ success: false, err});
@@ -79,6 +71,18 @@ app.get('/api/users/logout', auth, (req, res) => {
         return res.cookie("token_auth","").status(200).json({
             success: true
         });
+    });
+});
+
+// auth
+app.get('/api/users/auth', auth, (req, res) => {
+    res.status(200).json({ 
+        _id: req.user._id,
+        isAdmin: req.user.role === 0 ? false : true,
+        isAuth: true,
+        email: req.user.email,
+        name: req.user.name,
+        role: req.user.role
     });
 });
 
