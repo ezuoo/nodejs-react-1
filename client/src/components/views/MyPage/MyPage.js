@@ -4,6 +4,7 @@ import {useDispatch} from 'react-redux';
 
 import {deleteUser} from '../../../_actions/user_action';
 import {auth} from '../../../_actions/user_action';
+import { set } from 'mongoose';
 
 function MyPage(props) {
 
@@ -13,16 +14,16 @@ function MyPage(props) {
     const [Password, setPassword] = useState("");
 
     let data;
+    let user;
 
     const onClickViewHandler = () => {
-        data = dispatch(auth()).then( res => { 
-            console.log('email ', res.payload.email);    
-            return res.payload.email;
-        });
+        data = dispatch(auth()).then( res => { return res.payload; });
 
-        
-        console.log(data[0]);
-        
+        data.then(value => {user = value;} );
+
+        setTimeout(() => {
+            console.log('user : ', user);
+        } , 1000);
     }
 
     // to Home
