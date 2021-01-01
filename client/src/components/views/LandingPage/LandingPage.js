@@ -3,7 +3,11 @@ import axios from 'axios';
 import { withRouter } from 'react-router-dom';
 
 function LandingPage(props) {
-   
+    
+    const onClickAdminHandler = () => {
+        props.history.push('/admin');
+    }
+
     const onClickRegisterHandler = () => {
         props.history.push('/register');
     }
@@ -16,6 +20,7 @@ function LandingPage(props) {
         axios.get('/api/users/logout')
             .then(res => {
                 if (res.data.success) {
+                    console.log('logout : ', res.data);
                     props.history.push('/login');
                 } else {
                     alert('Fail Logout');
@@ -51,6 +56,11 @@ function LandingPage(props) {
                 <br /><br />
                 <button onClick={onClickMypageHandler}>
                     Mypage
+                </button>
+
+                <br /><br />
+                <button onClick={onClickAdminHandler}>
+                    Admin
                 </button>
             </div>
         </div>

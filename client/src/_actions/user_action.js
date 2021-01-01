@@ -2,10 +2,11 @@ import axios from 'axios';
 import { 
     LOGIN_USER, 
     REGISTER_USER,
-    AUTH_USER 
+    AUTH_USER,
+    DELETE_USER
 } from './types';
 
-/** login
+/** login action
  * @param {*} dataSubmit 
  */
 export function loginUser(dataSubmit) {
@@ -19,7 +20,7 @@ export function loginUser(dataSubmit) {
     }
 }
 
-/** register
+/** register action
  * @param {*} dataSubmit 
  */
 export function registerUser(dataSubmit) {
@@ -31,6 +32,31 @@ export function registerUser(dataSubmit) {
     }
 }
 
+/** delete aciton
+ * @param {*} dataSubmit 
+ */
+export function deleteUser(dataSubmit) {
+     const request =  axios.post('/api/users/delete', dataSubmit).then( res => res.data);
+    
+        return {
+        type: DELETE_USER,
+        payload: request
+    }
+}
+
+/*
+export function readUser() {
+    //const request =  axios.get('/api/users/read', dataSubmit).then( res => res.data);
+
+    return {
+        type: READ_USER,
+        payload: request
+    }
+}*/
+
+/** Authentication action
+ * 
+ */
 export function auth() {
     const request = axios.get('/api/users/auth').then(res => res.data);
 

@@ -20,11 +20,6 @@ mongoose.connect(config.mongoURI, {
   .catch( (err) => console.log(err) );
 
 
-// home
-app.get('/', (req, res) => {
-    res.send('Hello World!');
-});
-
 // register
 app.post('/api/users/register', (req, res) => {
     const user = new User(req.body);
@@ -69,27 +64,53 @@ app.get('/api/users/logout', auth, (req, res) => {
         if(err) return res.json({ success: false, err});
 
         return res.cookie("token_auth","").status(200).json({
-            success: true
+            success: true,
+            token : req.cookies.token_auth
         });
     });
 });
 
 // delete
-app.get('/api/users/delete', auth, (req, res) => {
+app.post('/api/users/delete', auth, (req, res) => {
+    // 메커니즘 
+    // 계정 서치 > 계정 암호 비교 > 삭제
     //User.findOneAndRemove
-    /*
-    User.findOne({email : req.body.email}, (err, user) => {
-
+    console.log(req.body.password);
+    User.findOne({email : req.user.email}, (err, user) => {
+        if(!user) {
+            return res.json({
+                deleteSuccess: false,
+                password: req.body.password,
+                msg : "There is no such user.",
+                cookie : req.cookies.token_auth
+            });
+        }
+        
         user.comparePassword(req.body.password, (err, isMatch) => {
-            if(!isMatch)
-                return res.json({ loginSuccess: false, message: "비밀번호가 틀렸습니다."});
+            if(!isMatch){
+                return res.status(200).json({ 
+                    deleteSuccess: false, 
+                    message: "incorrected password",
+                    password: req.body.password
+                });
+            }
             
-            console.log('비밀번호 일치');
+            User.deleteOne({email: req.user.email}, (err) => {
+                if(err) {
+                    res.json({ deleteSuccess : false, eror: err });
+                }
+
+
+                res.cookie("token_auth", "").status(200).json({
+                    deleteSuccess: true,
+                    password: req.body.password,
+                    msg : "corrected password",
+                    cookie : req.cookies.token_auth
+                });
+            });
         });
 
     });
-    */
-   res.send('delete');
 });
 
 

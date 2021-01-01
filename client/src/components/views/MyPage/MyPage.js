@@ -1,33 +1,60 @@
 import React, { useState } from 'react'
 import {withRouter} from 'react-router-dom';
-import axios from 'axios';
+import {useDispatch} from 'react-redux';
+
+import {deleteUser} from '../../../_actions/user_action';
+import {auth} from '../../../_actions/user_action';
 
 function MyPage(props) {
-    const rootId = 'root'
+
+    const dispatch = useDispatch();
     const btId = 'button';
     const formId = 'form';
-
     const [Password, setPassword] = useState("");
+
+    let data;
+
+    const onClickViewHandler = () => {
+        data = dispatch(auth()).then( res => { 
+            console.log('email ', res.payload.email);    
+            return res.payload.email;
+        });
+
+        
+        console.log(data[0]);
+        
+    }
 
     // to Home
     const onClickHomeHandler = () => {
         props.history.push('/');
     }
 
-    // do delete action
-    const onClickDeleteHandler = () => {
-        document.getElementById(btId).style.visibility = 'hidden';
-        document.getElementById(formId).style.visibility = 'visible';
-        axios.get('/api/users/delete')
-             .then( res => console.log(res.data));
-    }
-
+    // input password
     const onChangeHandler = (event) => {
         setPassword(event.currentTarget.value);
     }
 
-    const onSubmitHandler = () => {
-        alert('submit');
+    // do delete action
+    const onClickDeleteHandler = () => {
+        document.getElementById(btId).style.visibility = 'hidden';
+        document.getElementById(formId).style.visibility = 'visible';
+    }
+
+    const onSubmitHandler = (event) => {
+        event.preventDefault();
+
+        let body = { password : Password };
+        
+        // to _action/user_action    
+        dispatch(deleteUser(body))
+            .then(res => {
+                if(res.payload.deleteSuccess) {
+                    props.history.push('/');
+                } else {
+                    alert('Fail delete user');
+                }
+            });
     }
 
     return (
@@ -36,6 +63,10 @@ function MyPage(props) {
         }}>
             <div id = {btId} style={{position: 'absolute'}}>
                 MyPage
+                <br /><br />
+                <button onClick={onClickViewHandler}>
+                    View
+                </button>
                 <br /><br />
                 <button onClick={onClickDeleteHandler}>
                     Delete

@@ -41,10 +41,6 @@ function LoginPage(props) {
         
     }
 
-    // to Home
-    const onClickHomeHandler = () => {
-        props.history.push('/');
-    }
 
     return (
         <div style = {{

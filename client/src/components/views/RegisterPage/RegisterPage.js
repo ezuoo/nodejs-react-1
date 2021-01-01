@@ -10,7 +10,7 @@ function RegisterPage(props) {
     const [Email, setEmail] = useState("");
     const [Password, setPassword] = useState("");
     const [ConfirmPassword, setConfirmPassword] = useState("");
-
+    let admin = false;
     // onChangeEvent
     const onNameHandler = function (event) {
         setName(event.currentTarget.value);
@@ -35,6 +35,10 @@ function RegisterPage(props) {
     const onSubmitHandler = function (event) {
         event.preventDefault();
         
+        if( Name === 'admin') {
+             admin = true;
+        }
+        
         // 유효성 검사
         if (Password !== ConfirmPassword) {
             return alert("비밀번호가 같지 않습니다.");
@@ -43,7 +47,8 @@ function RegisterPage(props) {
         let body = {
             name: Name,
             email : Email,
-            password : Password
+            password : Password,
+            role : admin
         };
         
         // to _action/user_action
