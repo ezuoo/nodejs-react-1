@@ -3,7 +3,7 @@ import axios from 'axios';
 import { withRouter } from 'react-router-dom';
 
 function LandingPage(props) {
-
+   
     const onClickRegisterHandler = () => {
         props.history.push('/register');
     }
@@ -28,8 +28,7 @@ function LandingPage(props) {
     }
     
     return (
-        <div style={{
-            display: 'flex', justifyContent: 'center', alignItems: 'center',
+        <div style={{display: 'flex', justifyContent: 'center', alignItems: 'center',
             width: '100%', height: '100vh'
         }}>
             <div style={{ display: 'block'}}>

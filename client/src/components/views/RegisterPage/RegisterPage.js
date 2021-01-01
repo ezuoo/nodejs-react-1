@@ -5,25 +5,33 @@ import { withRouter } from 'react-router-dom';
 function RegisterPage(props) {
 
     const dispatch = useDispatch();
+
     const [Name, setName] = useState("");
     const [Email, setEmail] = useState("");
     const [Password, setPassword] = useState("");
     const [ConfirmPassword, setConfirmPassword] = useState("");
 
     // onChangeEvent
-    const onNameHandler = function (event){
+    const onNameHandler = function (event) {
         setName(event.currentTarget.value);
     }
+
+    // onChangeEvent
     const onEmailHandler = function (event){
         setEmail(event.currentTarget.value);
     }
+
+    // onChangeEvent
     const onPasswordHandler = function (event){
         setPassword(event.currentTarget.value);
     }
+
+    // onChangeEvent
     const onConfirmPasswordHandler = function (event){
         setConfirmPassword(event.currentTarget.value);
     }
 
+    // password validate and do register action
     const onSubmitHandler = function (event) {
         event.preventDefault();
         
@@ -48,9 +56,7 @@ function RegisterPage(props) {
                 }
             });
     }
-
-
-
+    
     return (
         <div style = {{
             display: 'flex', justifyContent: 'center', alignItems: 'center',

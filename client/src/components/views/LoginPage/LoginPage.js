@@ -4,18 +4,23 @@ import { loginUser } from '../../../_actions/user_action';
 import { withRouter } from 'react-router-dom';
 
 function LoginPage(props) {
+
     const dispatch = useDispatch();
+
     const [Email, setEmail] = useState("");
     const [Password, setPassword] = useState("");
 
+    // onChangeEvent
     const onEmailHandler =  (event) => {
         setEmail(event.currentTarget.value);
     }
 
+    // onChangeEvent
     const onPasswordHandler =  (event) => {
         setPassword(event.currentTarget.value);
     }
 
+    // do login action
     const onSubmitHandler =  (event) => {
         event.preventDefault();
 
@@ -36,6 +41,7 @@ function LoginPage(props) {
         
     }
 
+    // to Home
     const onClickHomeHandler = () => {
         props.history.push('/');
     }
@@ -56,11 +62,6 @@ function LoginPage(props) {
                     Login
                 </button>
             </form>
-            <div style={{ display: 'block' }}>
-                <button onClick={onClickHomeHandler}>
-                    Home
-                </button>
-            </div>
         </div>
     )
 }

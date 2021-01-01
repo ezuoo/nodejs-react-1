@@ -20,7 +20,7 @@ mongoose.connect(config.mongoURI, {
   .catch( (err) => console.log(err) );
 
 
-
+// home
 app.get('/', (req, res) => {
     res.send('Hello World!');
 });
@@ -73,6 +73,25 @@ app.get('/api/users/logout', auth, (req, res) => {
         });
     });
 });
+
+// delete
+app.get('/api/users/delete', auth, (req, res) => {
+    //User.findOneAndRemove
+    /*
+    User.findOne({email : req.body.email}, (err, user) => {
+
+        user.comparePassword(req.body.password, (err, isMatch) => {
+            if(!isMatch)
+                return res.json({ loginSuccess: false, message: "비밀번호가 틀렸습니다."});
+            
+            console.log('비밀번호 일치');
+        });
+
+    });
+    */
+   res.send('delete');
+});
+
 
 // auth
 app.get('/api/users/auth', auth, (req, res) => {
